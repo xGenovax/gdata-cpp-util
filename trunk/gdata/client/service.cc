@@ -11,16 +11,17 @@ Service::Service(const string &service_name, const string &application_name)
       application_name_(application_name) {
 
   // Standard headers for every request
+  request_headers_.push_back("User-Agent: " + application_name +
+                             " GData-C++/" + kVersion);
   request_headers_.push_back("GData-Version: 2.0");
 }
 
 void Service::ClientLogin(string email,
                           string password,
                           string account_type /*=HOSTED_OR_GOOGLE*/) {
-  string source = "GData-C++: " + application_name_;
   string body = "Email=" + email + "&Passwd=" + password +
                 "&accountType=" + account_type +
-                "&source=" + source + "&service=" + service_name_;
+                "&source=" + application_name_ + "&service=" + service_name_;
 
   PostData post_data;
   post_data.data = const_cast<char*>(body.c_str());
@@ -75,7 +76,7 @@ string Service::HttpRequest(const string& http_method,
     curl_easy_setopt(curl, CURLOPT_WRITEDATA, &resp_buffer);
     curl_easy_setopt(curl, CURLOPT_SSL_VERIFYPEER, 0L);
     curl_easy_setopt(curl, CURLOPT_SSL_VERIFYHOST, 0L);
-    //curl_easy_setopt(curl, CURLOPT_VERBOSE , 1);
+    curl_easy_setopt(curl, CURLOPT_VERBOSE , 1);
 
     struct curl_slist *headers = NULL;
 
