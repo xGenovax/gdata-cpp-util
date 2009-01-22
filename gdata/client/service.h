@@ -43,6 +43,7 @@ struct PostData {
   string filename;
 };
 
+const string kVersion = "1.0";
 const string kClientLoginUrl =
     "https://www.google.com/accounts/ClientLogin";
 const string kClientLoginAuthHeaderPrefix =
