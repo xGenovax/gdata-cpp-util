@@ -76,7 +76,7 @@ string Service::HttpRequest(const string& http_method,
     curl_easy_setopt(curl, CURLOPT_WRITEDATA, &resp_buffer);
     curl_easy_setopt(curl, CURLOPT_SSL_VERIFYPEER, 0L);
     curl_easy_setopt(curl, CURLOPT_SSL_VERIFYHOST, 0L);
-    curl_easy_setopt(curl, CURLOPT_VERBOSE , 1);
+    //curl_easy_setopt(curl, CURLOPT_VERBOSE , 1);
 
     struct curl_slist *headers = NULL;
 

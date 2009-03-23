@@ -7,7 +7,7 @@ const string DocListService::kServiceName = "writely";
 const string DocListService::kDocListScope = "http://docs.google.com/feeds";
 const string DocListService::kDocListFeed = "/documents/private/full";
 const string DocListService::kDocListFolderFeed = "/folders/private/full/";
-const string DocListService::kDocListACLFeed = "/acl/private/full/";
+const string DocListService::kDocListAclFeed = "/acl/private/full/";
 const string DocListService::kDocumentCategory = "/-/document";
 const string DocListService::kSpreadsheetCategory = "/-/spreadsheet";
 const string DocListService::kPresentationCategory = "/-/presentation";
@@ -35,8 +35,8 @@ vector< map<string, string> > DocListService::ListDocuments(
   xmlpp::NodeSet entries = atom_helper_.Entries();
 
   if (entries.size() && output) {
-    cout << "D: documents, S: spreadsheets, P: presentations, "
-         << "F: folders, U: unknown\n";
+    cout << "doc: documents, spre: spreadsheets, pres: presentations, "
+         << "fol: folders, pdf: pdfs, U: unknown\n";
   }
 
   for (unsigned int i = 0; i < entries.size(); ++i) {
@@ -49,20 +49,22 @@ vector< map<string, string> > DocListService::ListDocuments(
     data["id"] = atom_helper_.Id(entries[i]);
     data["title"] = atom_helper_.Title(entries[i]);
     data["acl_feedLink"] = atom_helper_.FeedLinkHref(entries[i]);
-
-    char doc_type = 'U';
+    
+    string doc_type = "U";
     if (data["category"] == "document") {
-      doc_type = 'D';
+      doc_type = "doc";
     } else if (data["category"] == "spreadsheet") {
-      doc_type = 'S';
+      doc_type = "spre";
     } else if (data["category"] == "presentation") {
-      doc_type = 'P';
+      doc_type = "pres";
     } else if (data["category"] == "folder") {
-      doc_type = 'F';
+      doc_type = "fol";
+    } else if (data["category"] == "pdf") {
+      doc_type = "pdf";
     }
 
     if (output) {
-      cout << "[" << doc_type << "] " << data["title"] << endl;
+      cout << "[" << doc_type << "] \t" << data["title"] << endl;
     }
 
     data["doc_type"] = doc_type;
@@ -81,8 +83,8 @@ void DocListService::ListAcls(string url) {
   cout << "Document's permissions\n";
   for (unsigned int i = 0; i < entries.size(); ++i) {
     string title = atom_helper_.Title(entries[i]);
-    string role = atom_helper_.ACLRole(entries[i]);
-    string scope = atom_helper_.ACLScope(entries[i]);
+    string role = atom_helper_.AclRole(entries[i]);
+    string scope = atom_helper_.AclScope(entries[i]);
     cout << role << " : " << scope << endl;
   }
 }

@@ -15,6 +15,7 @@
  * limitations under the License
  */
 
+#include <cstdlib>
 #include <fstream>
 #include <iomanip>
 #include <iostream>

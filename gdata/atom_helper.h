@@ -53,8 +53,8 @@ class AtomHelper {
   NodeSet Entries() const;
   string AlternateLinkHref(const Node *entry) const;
   string CategoryLabel(const Node *entry) const;
-  string ACLRole(const Node *entry) const;
-  string ACLScope(const Node *entry) const;
+  string AclRole(const Node *entry) const;
+  string AclScope(const Node *entry) const;
   string ContentSrc(const Node *entry) const;
   string EditLinkHref(const Node *entry) const;
   string EditMediaLinkHref(const Node *entry) const;
