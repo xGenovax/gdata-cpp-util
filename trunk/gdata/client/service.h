@@ -21,6 +21,8 @@
 #ifndef GDATA_CLIENT_SERVICE_H_
 #define GDATA_CLIENT_SERVICE_H_
 
+#include <cstdlib>
+#include <cstring>
 #include <fstream>
 #include <iostream>
 #include <string>

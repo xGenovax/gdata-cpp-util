@@ -44,7 +44,7 @@ class DocListService : public Service {
   static const string kDocListScope;
   static const string kDocListFeed;
   static const string kDocListFolderFeed;
-  static const string kDocListACLFeed;
+  static const string kDocListAclFeed;
   static const string kDocumentCategory;
   static const string kSpreadsheetCategory;
   static const string kPresentationCategory;

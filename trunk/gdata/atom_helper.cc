@@ -30,7 +30,6 @@ const Node* AtomHelper::Entry() const {
 
 NodeSet AtomHelper::Entries() const {
   NodeSet entries;
-
   if (parser_) {
     entries = Find(parser_.get_document()->get_root_node(), "./atom:entry");
   }
@@ -67,22 +66,34 @@ string AtomHelper::CategoryLabel(const Node *entry) const {
   return label;
 }
 
-string AtomHelper::ACLRole(const Node *entry) const {
+string AtomHelper::AclRole(const Node *entry) const {
   if (!parser_) return "";
   NodeSet roles = Find(entry, "./gAcl:role");
-  return Attribute(dynamic_cast<const Element*>(roles[0]), "value");
+  if (roles.size()) {
+    return Attribute(dynamic_cast<const Element*>(roles[0]), "value");
+  } else {
+    return "";
+  }
 }
 
-string AtomHelper::ACLScope(const Node *entry) const {
+string AtomHelper::AclScope(const Node *entry) const {
   if (!parser_) return "";
   NodeSet scopes = Find(entry, "./gAcl:scope");
-  return Attribute(dynamic_cast<const Element*>(scopes[0]), "value");
+  if (scopes.size()) {
+    return Attribute(dynamic_cast<const Element*>(scopes[0]), "value");
+  } else {
+    return "";
+  }
 }
 
 string AtomHelper::ContentSrc(const Node *entry) const {
   if (!parser_) return "";
   NodeSet contents = Find(entry, "./atom:content");
-  return Attribute(dynamic_cast<const Element*>(contents[0]), "src");
+  if (contents.size()) {
+    return Attribute(dynamic_cast<const Element*>(contents[0]), "src");
+  } else {
+    return "";
+  }
 }
 
 string AtomHelper::EditLinkHref(const Node *entry) const {
@@ -103,23 +114,35 @@ string AtomHelper::ETag(const Node *entry) const {
 string AtomHelper::FeedLinkHref(const Node *entry) const {
   if (!parser_) return "";
   NodeSet feedLinks = Find(entry, "./gd:feedLink");
-  return Attribute(dynamic_cast<const Element*>(feedLinks[0]), "href");
+  if (feedLinks.size()) {
+    return Attribute(dynamic_cast<const Element*>(feedLinks[0]), "href");
+  } else {
+    return "";
+  }
 }
 
 string AtomHelper::Id(const Node *entry) const {
   if (!parser_) return "";
   NodeSet ids = Find(entry, "./atom:id");
-  const TextNode *id =
-      dynamic_cast<const TextNode*>(*ids[0]->get_children().begin());
-  return id->get_content();
+  if (ids.size()) {
+    const TextNode *id =
+        dynamic_cast<const TextNode*>(*ids[0]->get_children().begin());
+    return id->get_content();
+  } else {
+    return "";
+  }
 }
 
 string AtomHelper::Title(const Node *entry) const {
   if (!parser_) return "";
   NodeSet titles = Find(entry, "./atom:title");
-  const TextNode *title =
+  if (titles.size()) {
+    const TextNode *title =
       dynamic_cast<const TextNode*>(*titles[0]->get_children().begin());
-  return title->get_content();
+    return title->get_content();
+  } else {
+    return "";
+  }
 }
 
 ////////////////////////////////////////////////////////////////////////////////
